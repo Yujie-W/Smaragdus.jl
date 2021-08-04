@@ -3,4 +3,5 @@
 # Types
 ```@docs
 Leaf
+WaveLengthSet
 ```
