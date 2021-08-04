@@ -1,3 +1,6 @@
 # Emerald
 
-Refactored CliMA Land model.
+# Types
+```@docs
+Leaf
+```
