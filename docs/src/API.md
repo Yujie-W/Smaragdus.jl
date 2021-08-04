@@ -1,3 +1,3 @@
-# Emerald.jl
+# Emerald
 
 Refactored CliMA Land model.
