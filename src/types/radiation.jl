@@ -1,8 +1,7 @@
-# Global constants (immutable)
 const FILE_SUN  = artifact"land_model_spectrum_V1" * "/sun.mat";
 const OPTI_2017 = artifact"land_model_spectrum_V1" * "/Optipar2017_ProspectD.mat";
 const OPTI_2021 = artifact"land_model_spectrum_V1" * "/Optipar2021_ProspectPRO_CX.mat";
-WAVELENGTHS = [collect(400:10:650.1); collect(655:5:770); collect(780:25:2400.1)];
+WAVELENGTHS = [collect(400:10:650.1); collect(655:5:770.1); collect(780:25:2400.1)];
 
 
 """
@@ -16,6 +15,7 @@ $(TYPEDFIELDS)
 # Examples
 ```julia
 wls = WaveLengthSet{FT}();
+wls = WaveLengthSet{FT}(FT.(Emerald.WAVELENGTHS));
 wls = WaveLengthSet{FT}(collect(FT,400:5:2500));
 wls = WaveLengthSet{FT}(opt=Emerald.OPTI_2017);
 wls = WaveLengthSet{FT}(collect(FT,400:5:2500); opt=Emerald.OPTI_2017);
