@@ -1,7 +1,18 @@
 # Emerald
+```@meta
+CurrentModule = Emerald
+```
 
-# Types
+
+## Types
 ```@docs
 Leaf
+LeafBio
 WaveLengthSet
+```
+
+
+## Utilities
+```@docs
+nanmean
 ```
