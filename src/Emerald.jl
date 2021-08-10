@@ -11,11 +11,16 @@ using UnPack: @unpack
 export Leaf, WaveLengthSet
 
 
-# include files
+# include utility files
+include("utils/radiation.jl")
 include("utils/statistics.jl")
 
-include("types/radiation.jl")
+# include type files
+include("types/wavelength.jl")
 include("types/leaf.jl")
+
+# include sub-modules
+include("LeafLevel/LeafLevel.jl")
 
 
 end # module

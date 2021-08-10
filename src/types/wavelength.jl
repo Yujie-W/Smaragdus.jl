@@ -15,10 +15,8 @@ $(TYPEDFIELDS)
 # Examples
 ```julia
 wls = WaveLengthSet{FT}();
-wls = WaveLengthSet{FT}(FT.(Emerald.WAVELENGTHS));
 wls = WaveLengthSet{FT}(collect(FT,400:5:2500));
-wls = WaveLengthSet{FT}(opt=Emerald.OPTI_2017);
-wls = WaveLengthSet{FT}(collect(FT,400:5:2500); opt=Emerald.OPTI_2017);
+wls = WaveLengthSet{FT}(collect(FT,400:5:2500); opti=Emerald.OPTI_2017);
 ```
 """
 mutable struct WaveLengthSet{FT<:AbstractFloat}
