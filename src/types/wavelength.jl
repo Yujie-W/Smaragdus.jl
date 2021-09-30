@@ -81,7 +81,7 @@ mutable struct WaveLengthSet{FT<:AbstractFloat}
         _iλ_sif  = findall( 640 .<= _λ .<= 850  );
         _iλ_sife = findall( 400 .<= _λ .<= 750  );
 
-        return new(_iλ_nir, _iλ_par, _iλ_sif, _iλ_sife, length(_λ), length(_iλ_par), length(_iλ_sif), length(_iλ_sife), FT[700,2500], FT[400,700],
-                   FT[640,850], FT[400,750], swl, _dwl, _dwl[_iλ_par], _dwl[_iλ_sife], _λ, _λ[_iλ_par], _λ[_iλ_sif], _λ[_iλ_sife])
+        return new(_iλ_nir, _iλ_par, _iλ_sif, _iλ_sife, length(_λ), length(_iλ_par), length(_iλ_sif), length(_iλ_sife), FT[700,2500], FT[400,700], FT[640,850], FT[400,750], swl, _dwl, _dwl[_iλ_par],
+                   _dwl[_iλ_sife], _λ, _λ[_iλ_par], _λ[_iλ_sif], _λ[_iλ_sife])
     )
 end

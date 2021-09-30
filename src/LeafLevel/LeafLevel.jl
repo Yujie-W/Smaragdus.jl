@@ -4,7 +4,7 @@ using SpecialFunctions: expint
 using UnPack: @unpack
 
 # using external types and functions
-using ..Emerald: Leaf, WaveLengthSet
+using ..Emerald: Leaf, WaveLengthSet, calctav
 
 
 function fluspect!(leaf::Leaf{FT}, wls::WaveLengthSet{FT}; APAR_car::Bool = true) where {FT<:AbstractFloat}
@@ -27,6 +27,7 @@ function fluspect!(leaf::Leaf{FT}, wls::WaveLengthSet{FT}; APAR_car::Bool = true
 
     _τ = (1 .- BIO._k_all) .* exp.(-BIO._k_all) .+ BIO._k_all .^ 2 .* expint.(BIO._k_all .+ eps(FT));
 
+    # TODO: continue here later
     talf = calctav.(FT(40), NR)
 
     return nothing

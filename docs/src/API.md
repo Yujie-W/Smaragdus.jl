@@ -7,7 +7,7 @@ CurrentModule = Emerald
 ## Types
 ```@docs
 Leaf
-LeafBio
+LeafBiophysics
 WaveLengthSet
 ```
 
