@@ -1,4 +1,4 @@
-module LeafLevel
+module Folium
 
 using SpecialFunctions: expint
 using UnPack: @unpack
@@ -7,8 +7,12 @@ using UnPack: @unpack
 using ..Emerald: Leaf, WaveLengthSet, calctav
 
 
+# export the public functions
+export fluspect!
+
+
 function fluspect!(leaf::Leaf{FT}, wls::WaveLengthSet{FT}; APAR_car::Bool = true) where {FT<:AbstractFloat}
-    BIO = leaf.BIO;
+    BIO = leaf.BIO_PHYSICS;
     @unpack K_ANT, K_CAB, K_CAR_V, K_CAR_Z, K_CBC, K_H₂O, K_LMA, K_PRO, K_SENES, MESOPHYLL_N, NR = BIO;
 
     # calculate the average absorption feature and relative Cab and Car partitions
@@ -16,7 +20,7 @@ function fluspect!(leaf::Leaf{FT}, wls::WaveLengthSet{FT}; APAR_car::Bool = true
                      K_CAR_V .* BIO.car .* (1 - BIO.f_zeax) .+  # violaxanthin carotenoid absorption
                      K_CAR_Z .* BIO.car .* BIO.f_zeax .+        # zeaxanthin carotenoid absorption
                      K_ANT   .* BIO.ant .+                      # anthocynanin absorption absorption
-                     K_SENES .* BIO.f_senes .+                  # TODO cannot be a fraction
+                     K_SENES .* BIO.f_senes .+                  # TODO: cannot be a fraction
                      K_H₂O   .* BIO.l_H₂O .+                    # water absorption
                      K_CBC   .* BIO.CBC .+                      # carbon-based constituents absorption
                      K_PRO   .* BIO.PRO .+                      # protein absorption

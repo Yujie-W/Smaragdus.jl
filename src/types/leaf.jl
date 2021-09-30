@@ -12,8 +12,8 @@ $(TYPEDFIELDS)
 lbio = Emerald.LeafBiophysics{FT}();
 lbio = Emerald.LeafBiophysics{FT}(collect(FT,400:5:2500.1));
 lbio = Emerald.LeafBiophysics{FT}(collect(FT,400:5:2500.1); opti=Emerald.OPTI_2021);
-lbio = Emerald.LeafBiophysics(WaveLengthSet{FT}());
-lbio = Emerald.LeafBiophysics(WaveLengthSet{FT}(); opti=Emerald.OPTI_2021);
+lbio = Emerald.LeafBiophysics{FT}(WaveLengthSet{FT}());
+lbio = Emerald.LeafBiophysics{FT}(WaveLengthSet{FT}(); opti=Emerald.OPTI_2021);
 ```
 """
 mutable struct LeafBiophysics{FT<:AbstractFloat}
@@ -90,6 +90,7 @@ mutable struct LeafBiophysics{FT<:AbstractFloat}
     _α_SW::Vector{FT}
 
     # constructors
+    LeafBiophysics{FT}(swl::Vector{FT}=FT.(WAVELENGTHS); opti::String=OPTI_2021) where {FT<:AbstractFloat} = LeafBiophysics{FT}(WaveLengthSet{FT}(swl; opti=opti); opti=opti)
     LeafBiophysics{FT}(wls::WaveLengthSet{FT}; opti::String=OPTI_2021) where {FT<:AbstractFloat} = (
         @unpack NΛ, NΛ_SIF, NΛ_SIFE, SΛ = wls;
 
@@ -151,8 +152,6 @@ mutable struct LeafBiophysics{FT<:AbstractFloat}
         return new{FT}(1, 0.012, 0, 0, _Kant, _Kcab, _KcaV, _KcaZ, _Kcbc, _Kh2o, _Klma, _Kpro, _Kps, _Ksenes, 1.4, 10, _nr, 0, 40, 10, 0, 0, 0.01, zeros(FT,NΛ_SIF,NΛ_SIFE), zeros(FT,NΛ_SIF,NΛ_SIFE),
                        zeros(FT,NΛ), zeros(FT,NΛ), 0.01, zeros(FT,NΛ), 0.01, zeros(FT,NΛ), zeros(FT,NΛ), zeros(FT,NΛ))
     )
-
-    LeafBiophysics{FT}(swl::Vector{FT}=FT.(WAVELENGTHS); opti::String=OPTI_2021) where {FT<:AbstractFloat} = LeafBiophysics{FT}(WaveLengthSet{FT}(swl; opti=opti); opti=opti)
 end
 
 

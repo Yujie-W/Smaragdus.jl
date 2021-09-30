@@ -8,19 +8,21 @@ using UnPack: @unpack
 
 
 # export public types
-export Leaf, WaveLengthSet
+export BrooksCorey, Leaf, VanGenuchten, WaveLengthSet
 
 
 # include utility files
-include("utils/radiation.jl")
+include("utils/radiation.jl" )
 include("utils/statistics.jl")
 
 # include type files
-include("types/wavelength.jl")
-include("types/leaf.jl")
+include("types/environment.jl")
+include("types/wavelength.jl" )
+include("types/leaf.jl"       )
 
 # include sub-modules
-include("LeafLevel/LeafLevel.jl")
+include("Folium.jl")
+include("Soli.jl"  )
 
 
 end # module
