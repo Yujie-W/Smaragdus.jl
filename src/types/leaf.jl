@@ -1,3 +1,13 @@
+#######################################################################################################################################################################################################
+# Changes to this structure
+# General
+#     2021-Aug-04: refactor the structure with constants, variables, and temporary cache
+#     2021-Aug-04: add concentrations and characteristic curves altogether
+#     2021-Aug-10: add CBC and PRO supoort
+#     2021-Agu-10: add constructors within the structure rather than initialize it externally
+#     2021-Sep-30: rename LeafBio to LeafBiophysics to be more specific
+#
+#######################################################################################################################################################################################################
 """
 $(TYPEDEF)
 
@@ -155,6 +165,16 @@ mutable struct LeafBiophysics{FT<:AbstractFloat}
 end
 
 
+#######################################################################################################################################################################################################
+# Changes to this structure
+# General
+#     2021-Aug-04: refactor the structure with BIO_PHYSICS as a field
+# To do
+#     TODO: add leaf physiological parameters as a field well
+#     TODO: add leaf hydraulics as a field as well
+#     TODO: link leaf water content to BIO_PHYSICS.l_H₂O
+#
+#######################################################################################################################################################################################################
 """
 $(TYPEDEF)
 

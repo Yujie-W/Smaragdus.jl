@@ -8,6 +8,14 @@ Hierachy of AbstractSoilVC:
 abstract type AbstractSoilVC{FT<:AbstractFloat} end
 
 
+#######################################################################################################################################################################################################
+#
+# Changes to this structure
+# General
+#     2021-Sep-30: define this structure with no default constructor
+#     2021-Sep-30: define a constructor to fil the value from VanGenuchten parameters
+#
+#######################################################################################################################################################################################################
 """
 $(TYPEDEF)
 
@@ -33,12 +41,16 @@ struct BrooksCorey{FT<:AbstractFloat} <:AbstractSoilVC{FT}
     Θ_SAT::FT
     "Residual soil volumetric water content"
     Θ_RES::FT
-
-    # constructors
-    BrooksCorey{FT}(name::String, b::FT, ψ_sat::FT, θ_sat::FT, θ_res::FT) where {FT<:AbstractFloat} = new{FT}(name, b, ψ_sat, θ_sat, θ_res)
 end
 
 
+#######################################################################################################################################################################################################
+#
+# Changes to this structure
+# General
+#     2021-Sep-30: define this structure with two default constructors from an incomplete parameter set
+#
+#######################################################################################################################################################################################################
 """
 $(TYPEDEF)
 
@@ -111,11 +123,18 @@ struct VanGenuchten{FT<:AbstractFloat} <:AbstractSoilVC{FT}
 end
 
 
+#######################################################################################################################################################################################################
+#
+# Changes to this structure
+# General
+#     2021-Sep-30: define this structure with no constructors
+#
+#######################################################################################################################################################################################################
 """
 $(TYPEDEF)
 
 Struct that contains environmental conditions, such as soil moisture and atmospheric vapor pressure. Note that this structure is designed to be containers to interact with other CliMA modules and to
-    prescrive values.
+    prescribe values.
 
 # Fields
 $(TYPEDFIELDS)

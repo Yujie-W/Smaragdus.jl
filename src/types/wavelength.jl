@@ -1,9 +1,22 @@
-const FILE_SUN  = artifact"land_model_spectrum_V1" * "/sun.mat";
+#######################################################################################################################################################################################################
+# Changes to these constants
+# General
+#     2020-May-30: put the 2017 mat file in an artifact
+#     2020-Aug-30: add the updated 2021 mat file along with that of 2017 into a new artifact
+#
+#######################################################################################################################################################################################################const FILE_SUN  = artifact"land_model_spectrum_V1" * "/sun.mat";
 const OPTI_2017 = artifact"land_model_spectrum_V1" * "/Optipar2017_ProspectD.mat";
 const OPTI_2021 = artifact"land_model_spectrum_V1" * "/Optipar2021_ProspectPRO_CX.mat";
 WAVELENGTHS = [collect(400:10:650.1); collect(655:5:770.1); collect(780:25:2400.1)];
 
 
+#######################################################################################################################################################################################################
+# Changes to this structure
+# General
+#     2021-Aug-10: refactor the structure with renamed fields
+#     2021-Aug-10: add a constructor within the structure to avoid external initialization
+#
+#######################################################################################################################################################################################################
 """
 $(TYPEDEF)
 

@@ -12,6 +12,13 @@ import ..Emerald: BrooksCorey
 export soil_ψ_25
 
 
+#######################################################################################################################################################################################################
+#
+# Changes made to this function
+# General
+#     2021-Sep-30: move this function out of BrooksCorey struct as an external method for the constructor
+#
+#######################################################################################################################################################################################################
 """
     BrooksCorey{FT}(name::String)
 
@@ -38,6 +45,13 @@ BrooksCorey{FT}(vg::VanGenuchten{FT}) where {FT<:AbstractFloat} = (
 )
 
 
+#######################################################################################################################################################################################################
+#
+# Changes made to this function
+# General
+#     2021-Sep-30: create this function to work with two soil types using either VanGenuchten or BrooksCorey function
+#
+#######################################################################################################################################################################################################
 """
 This function calculates soil metric potential from soil retention curve type and soil volumetric water potential. The supported methods are
 
