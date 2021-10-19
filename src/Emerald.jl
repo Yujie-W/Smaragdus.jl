@@ -14,7 +14,8 @@
 #######################################################################################################################################################################################################
 module Emerald
 
-using Artifacts: @artifact_str
+using LazyArtifacts
+
 using DocStringExtensions: TYPEDEF, TYPEDFIELDS
 using MAT: matread
 using PkgUtility: T_25
