@@ -42,5 +42,9 @@
         bc = BrooksCorey{FT}("Test", FT(5), FT(2), FT(0.5), FT(0.1));
         bc = BrooksCorey{FT}(VanGenuchten{FT}("Loam"));
         @test true;
+
+        # create SoilAir struct
+        sa = SoilAir{FT}(collect(FT,-2:0.2:0), collect(FT,0:0.2:4));
+        @test true;
     end
 end

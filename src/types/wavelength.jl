@@ -15,6 +15,7 @@ WAVELENGTHS = [collect(400:10:650.1); collect(655:5:770.1); collect(780:25:2400.
 # General
 #     2021-Aug-10: refactor the structure with renamed fields
 #     2021-Aug-10: add a constructor within the structure to avoid external initialization
+#     2021-Oct-19: sort variable to prognostic and dignostic catergories
 #
 #######################################################################################################################################################################################################
 """
@@ -75,7 +76,9 @@ mutable struct WaveLengthSet{FT<:AbstractFloat}
     "Wavelength bins for SIF excitation `[nm]`"
     Λ_SIFE::Vector{FT}
 
-    # variables that change with time
+    # prognostic variables that change with time
+
+    # dignostic variables that change with time
 
     # caches to speed up calculations
 

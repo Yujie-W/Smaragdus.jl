@@ -6,11 +6,12 @@ CurrentModule = Emerald
 
 ## Types
 
-### Soil
+### Environment
 ```@docs
 AbstractSoilVC
 BrooksCorey
 VanGenuchten
+SoilAir
 ```
 
 ### Leaf

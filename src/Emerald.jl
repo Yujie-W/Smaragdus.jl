@@ -17,12 +17,14 @@ module Emerald
 using Artifacts: @artifact_str
 using DocStringExtensions: TYPEDEF, TYPEDFIELDS
 using MAT: matread
+using PkgUtility: T_25
 using Statistics: mean
 using UnPack: @unpack
+using WaterPhysics: saturation_vapor_pressure
 
 
 # export public types
-export BrooksCorey, Leaf, VanGenuchten, WaveLengthSet
+export BrooksCorey, Leaf, SoilAir, VanGenuchten, WaveLengthSet
 
 
 # include utility files
@@ -35,6 +37,7 @@ include("types/wavelength.jl" )
 include("types/leaf.jl"       )
 
 # include sub-modules
+include("Aeris.jl" )
 include("Folium.jl")
 include("Soli.jl"  )
 

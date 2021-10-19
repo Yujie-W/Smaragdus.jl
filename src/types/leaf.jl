@@ -6,6 +6,7 @@
 #     2021-Aug-10: add CBC and PRO supoort
 #     2021-Agu-10: add constructors within the structure rather than initialize it externally
 #     2021-Sep-30: rename LeafBio to LeafBiophysics to be more specific
+#     2021-Oct-19: sort variable to prognostic and dignostic catergories
 #
 #######################################################################################################################################################################################################
 """
@@ -63,7 +64,7 @@ mutable struct LeafBiophysics{FT<:AbstractFloat}
     "Refractive index `[-]`"
     NR::Vector{FT}
 
-    # variables that change with time
+    # prognostic variables that change with time
     "Anthocynanin content `[ug cm⁻²]`"
     ant::FT
     "Chlorophyll a and b content `[ug cm⁻²]`"
@@ -76,6 +77,8 @@ mutable struct LeafBiophysics{FT<:AbstractFloat}
     f_zeax
     "Equivalent water thickness `[cm]`"
     l_H₂O::FT
+
+    # dignostic variables that change with time
     "Fluorescence excitation matrix backwards `[-]`"
     mat_b::Matrix{FT}
     "Fluorescence excitation matrix forwards `[-]`"
@@ -169,6 +172,7 @@ end
 # Changes to this structure
 # General
 #     2021-Aug-04: refactor the structure with BIO_PHYSICS as a field
+#     2021-Oct-19: sort variable to prognostic and dignostic catergories
 # To do
 #     TODO: add leaf physiological parameters as a field well
 #     TODO: add leaf hydraulics as a field as well
@@ -198,9 +202,11 @@ mutable struct Leaf{FT<:AbstractFloat}
     "Biophysical parameter structure"
     BIO_PHYSICS::LeafBiophysics{FT}
 
-    # variables that change with time
+    # prognostic variables that change with time
     "Current leaf temperature"
     t::FT
+
+    # dignostic variables that change with time
 
     # caches to speed up calculations
     "Last leaf temperature. If different from t, then make temperature correction"

@@ -85,7 +85,7 @@ soil_ψ_25(vc::BrooksCorey{FT}, θ::FT) where {FT<:AbstractFloat} = (
     end;
 
     return -Ψ_SAT / (_θ_e ^ B)
-)
+);
 
 
 soil_ψ_25(vc::VanGenuchten{FT}, θ::FT) where {FT<:AbstractFloat} = (
@@ -100,7 +100,7 @@ soil_ψ_25(vc::VanGenuchten{FT}, θ::FT) where {FT<:AbstractFloat} = (
     end;
 
     return -1 * (_θ_e ^ (-1/M) - 1) ^ (1/N) / Α
-)
+);
 
 
 end # module
