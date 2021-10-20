@@ -2,7 +2,7 @@
 #
 # Changes to this function
 # General
-#     2021-Aug-04: add this function to acoid NaN calculations
+#     2021-Aug-04: add this function to avoid NaN calculations
 #
 #######################################################################################################################################################################################################
 """
