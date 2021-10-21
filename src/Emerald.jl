@@ -37,10 +37,11 @@ include("types/environment.jl")
 include("types/wavelength.jl" )
 include("types/leaf.jl"       )
 
-# include sub-modules
-include("Aeris.jl" )
-include("Folium.jl")
-include("Soli.jl"  )
+# include sub-modules in a dependency manner
+include("Radiatio.jl")
+include("Aeris.jl"   )
+include("Folium.jl"  )
+include("Soli.jl"    )
 
 
 end # module
