@@ -42,7 +42,7 @@ BrooksCorey{FT}(vg::VanGenuchten{FT}) where {FT<:AbstractFloat} = (
     _sol = find_peak(_fit, _ms, _st);
 
     return BrooksCorey{FT}(vg.TYPE, _sol[1], _sol[2], vg.Θ_SAT, vg.Θ_RES);
-)
+);
 
 
 #######################################################################################################################################################################################################
@@ -50,6 +50,8 @@ BrooksCorey{FT}(vg::VanGenuchten{FT}) where {FT<:AbstractFloat} = (
 # Changes made to this function
 # General
 #     2021-Sep-30: create this function to work with two soil types using either VanGenuchten or BrooksCorey function
+# To do
+#     TODO: add References for this methods
 #
 #######################################################################################################################################################################################################
 """

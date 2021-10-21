@@ -8,6 +8,7 @@
 #     2021-Agu-10: add constructors within the structure rather than initialize it externally
 #     2021-Sep-30: rename LeafBio to LeafBiophysics to be more specific
 #     2021-Oct-19: sort variable to prognostic and dignostic catergories
+#     2021-Oct-21: rename f_sense and K_SENES to brown and K_BROWN
 #
 #######################################################################################################################################################################################################
 """
@@ -40,6 +41,8 @@ mutable struct LeafBiophysics{FT<:AbstractFloat}
     PRO::FT
     "Specific absorption coefficients of anthocynanin `[-]`"
     K_ANT::Vector{FT}
+    "Specific absorption coefficients of senescent material (brown pigments) `[-]`"
+    K_BROWN::Vector{FT}
     "Specific absorption coefficients of chlorophyll a and b `[-]`"
     K_CAB::Vector{FT}
     "Specific absorption coefficients of violaxanthin carotenoid `[-]`"
@@ -56,8 +59,6 @@ mutable struct LeafBiophysics{FT<:AbstractFloat}
     K_PRO::Vector{FT}
     "Specific absorption coefficients of PS I and II `[-]`"
     K_PS::Vector{FT}
-    "Specific absorption coefficients of senescent material `[-]`"
-    K_SENES::Vector{FT}
     "Leaf mesophyll structural parameter that describes mesophyll reflection and transmittance"
     MESOPHYLL_N::FT
     "Doubling adding layers"
@@ -68,12 +69,12 @@ mutable struct LeafBiophysics{FT<:AbstractFloat}
     # prognostic variables that change with time
     "Anthocynanin content `[ug cm⁻²]`"
     ant::FT
+    "Senescent material (brown pigments) fraction `[-]`"
+    brown::FT
     "Chlorophyll a and b content `[ug cm⁻²]`"
     cab::FT
     "Carotenoid content `[ug cm⁻²]`"
     car::FT
-    "Senescent material (brown pigments) fraction `[-]`"
-    f_senes::FT
     "Zeaxanthin fraction in Carotenoid (1=all Zeaxanthin, 0=all Violaxanthin) `[-]`"
     f_zeax
     "Equivalent water thickness `[cm]`"
@@ -115,7 +116,7 @@ mutable struct LeafBiophysics{FT<:AbstractFloat}
         __Kcab   = _opti["Kab" ];
         __Kant   = _opti["Kant"];
         __Kh2o   = _opti["Kw"  ];
-        __Ksenes = _opti["Ks"  ];
+        __Kbrown = _opti["Ks"  ];
         __Kps    = _opti["phi" ];
         __KcaV   = _opti["KcaV"];
         __KcaZ   = _opti["KcaZ"];
@@ -136,7 +137,7 @@ mutable struct LeafBiophysics{FT<:AbstractFloat}
         _Kcab   = zeros(FT, NΛ);
         _Kant   = zeros(FT, NΛ);
         _Kh2o   = zeros(FT, NΛ);
-        _Ksenes = zeros(FT, NΛ);
+        _Kbrown = zeros(FT, NΛ);
         _Kps    = zeros(FT, NΛ);
         _KcaV   = zeros(FT, NΛ);
         _KcaZ   = zeros(FT, NΛ);
@@ -155,7 +156,7 @@ mutable struct LeafBiophysics{FT<:AbstractFloat}
             _Kcab[_i]   = nanmean(__Kcab[_wo]  );
             _Kant[_i]   = nanmean(__Kant[_wo]  );
             _Kh2o[_i]   = nanmean(__Kh2o[_wo]  );
-            _Ksenes[_i] = nanmean(__Ksenes[_wo]);
+            _Kbrown[_i] = nanmean(__Kbrown[_wo]);
             _Kps[_i]    = nanmean(__Kps[_wo]   );
             _KcaV[_i]   = nanmean(__KcaV[_wo]  );
             _KcaZ[_i]   = nanmean(__KcaZ[_wo]  );
@@ -163,7 +164,7 @@ mutable struct LeafBiophysics{FT<:AbstractFloat}
             _Kcbc[_i]   = nanmean(__Kcbc[_wo]  );
         end;
 
-        return new{FT}(1, 0.012, 0, 0, _Kant, _Kcab, _KcaV, _KcaZ, _Kcbc, _Kh2o, _Klma, _Kpro, _Kps, _Ksenes, 1.4, 10, _nr, 0, 40, 10, 0, 0, 0.01, zeros(FT,NΛ_SIF,NΛ_SIFE), zeros(FT,NΛ_SIF,NΛ_SIFE),
+        return new{FT}(1, 0.012, 0, 0, _Kant, _Kbrown, _Kcab, _KcaV, _KcaZ, _Kcbc, _Kh2o, _Klma, _Kpro, _Kps, 1.4, 10, _nr, 0, 0, 40, 10, 0, 0.01, zeros(FT,NΛ_SIF,NΛ_SIFE), zeros(FT,NΛ_SIF,NΛ_SIFE),
                        zeros(FT,NΛ), zeros(FT,NΛ), 0.01, zeros(FT,NΛ), 0.01, zeros(FT,NΛ), zeros(FT,NΛ), zeros(FT,NΛ))
     )
 end
