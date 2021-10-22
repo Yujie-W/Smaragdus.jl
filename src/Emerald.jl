@@ -34,7 +34,7 @@ include("utils/statistics.jl")
 
 # include type files
 include("types/environment.jl")
-include("types/wavelength.jl" )
+include("types/radiation.jl"  )
 include("types/leaf.jl"       )
 
 # include sub-modules in a dependency manner
