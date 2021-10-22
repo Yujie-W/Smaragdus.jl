@@ -1,9 +1,11 @@
 module Radiatio
 
+using PkgUtility: H_PLANCK, LIGHT_SPEED, AVOGADRO
+
 
 #######################################################################################################################################################################################################
 #
-# Changes made to this method
+# Changes made to this function
 # General
 #     2020-Mar-30: migrate the function from SCOPE
 #     2021-Oct-21: rename the function to average_transmittance
@@ -57,6 +59,28 @@ function average_transmittance(α::FT, nr::FT) where {FT<:AbstractFloat}
     _tp  = _tp₁ + _tp₂ + _tp₃ + _tp₄ + _tp₅;
 
     return  (_ts + _tp) / (2 * _sin²α)
+end
+
+
+#######################################################################################################################################################################################################
+#
+# Changes made to this function
+# General
+#     2021-Oct-22: rename the function to photon
+#
+#######################################################################################################################################################################################################
+_FAC(FT) = FT(1e-9) / (H_PLANCK(FT) * LIGHT_SPEED(FT) * AVOGADRO(FT));
+
+
+"""
+    photon(λ::Array{FT}, E::Array{FT}) where {FT<:AbstractFloat}
+
+Return the number of moles of photons, given
+- `λ` An array of wave length in `[nm]`, converted to `[m]` by _FAC
+- `E` Joules of energy
+"""
+function photon(λ::Array{FT}, E::Array{FT}) where {FT<:AbstractFloat}
+    return (E .* λ) .* _FAC(FT)
 end
 
 

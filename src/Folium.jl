@@ -1,11 +1,12 @@
 module Folium
 
+using PkgUtility: numerical∫
 using SpecialFunctions: expint
 using UnPack: @unpack
 
 # using external types and functions
-using ..Emerald: Leaf, WaveLengthSet
-using ..Radiatio: average_transmittance
+using ..Emerald: HyperspectralRadiation, Leaf, WaveLengthSet
+using ..Radiatio: average_transmittance, photon
 
 
 # export the public functions
@@ -36,6 +37,7 @@ function leaf_spectra! end
 # To do
 #     TODO: make brown pigment and absoption curve more general using realistic units
 #     TODO: add References for this methods
+#     TODO: speed up this function by preallocate memories using a cache structure
 #
 #######################################################################################################################################################################################################
 """
@@ -115,7 +117,7 @@ leaf_spectra!(leaf::Leaf{FT}, wls::WaveLengthSet{FT}; APAR_car::Bool = true, α:
     _denom    = 1 .- _ρ_sub .* _ρ_bottom;
     BIO.τ_SW  = _τ_top .* _τ_sub ./ _denom;
     BIO.ρ_SW  = _ρ_top .+ _τ_top .* _ρ_sub .* _τ_bottom ./ _denom;
-    BIO._α_SW = 1 .- BIO.τ_SW .- BIO.ρ_SW;
+    BIO.α_SW = 1 .- BIO.τ_SW .- BIO.ρ_SW;
 
     # Doubling method used to calculate fluoresence is now only applied to the part of the leaf where absorption takes place, that is, the part exclusive of the leaf-air interfaces.
     # The reflectance (rho) and transmittance (tau) of this part of the leaf are now determined by "subtracting" the interfaces.
@@ -229,10 +231,56 @@ leaf_spectra!(leaf::Leaf{FT}, wls::WaveLengthSet{FT}, ρₚₐᵣ::FT, ρₙᵢ�
     BIO.ρ_SW[IΛ_NIR] .= ρₙᵢᵣ;
     BIO.τ_SW[IΛ_PAR] .= τₚₐᵣ;
     BIO.τ_SW[IΛ_NIR] .= τₙᵢᵣ;
-    BIO._α_SW = 1 .- BIO.τ_SW .- BIO.ρ_SW;
+    BIO.α_SW = 1 .- BIO.τ_SW .- BIO.ρ_SW;
 
     return nothing
 );
+
+
+#######################################################################################################################################################################################################
+#
+# Changes made to this function
+# General
+#     2021-Oct-22: add function to compute leaf level PAR and APAR
+# To do
+#     TODO: use cache to speed this up
+#
+#######################################################################################################################################################################################################
+"""
+    leaf_PAR(leaf::Leaf{FT}, wls::WaveLengthSet{FT}, rad::HyperspectralRadiation{FT}; APAR_car::Bool = true) where {FT<:AbstractFloat}
+
+Return leaf level PAR and APAR, given
+- `leaf` [`Leaf`](@ref) type struct that contains leaf biophysical parameters
+- `wls` [`WaveLengthSet`](@ref) type struct that contains wave length bins
+- `rad` [`HyperspectralRadiation`](@ref) type struct that contains incoming radiation information
+- `APAR_car` If true (default), account carotenoid absorption as APAR; otherwise, APAR is only by chlorophyll
+"""
+function leaf_PAR(leaf::Leaf{FT}, wls::WaveLengthSet{FT}, rad::HyperspectralRadiation{FT}; APAR_car::Bool = true) where {FT<:AbstractFloat}
+    BIO = leaf.BIO_PHYSICS;
+    @unpack α_cab, α_cabcar, α_SW = BIO;
+    @unpack IΛ_PAR, ΔΛ_PAR, Λ_PAR = wls;
+
+    # APAR absorption feature
+    _α = (APAR_car ? view(α_cabcar, IΛ_PAR) : view(α_cab, IΛ_PAR));
+
+    # PAR energy from direct  and diffuse light
+    _e_par_dir  = view(rad.e_direct , IΛ_PAR) .* view(leaf.α_SW, IΛ_PAR);
+    _e_par_diff = view(rad.e_diffuse, IΛ_PAR) .* view(leaf.α_SW, IΛ_PAR);
+    _par_dir  = photon(Λ_PAR, _e_par_dir );
+    _par_diff = photon(Λ_PAR, _e_par_diff);
+
+    # absorbed PAR energy from direct and diffuse light
+    _apar_dir  = _α .* _par_dir;
+    _apar_diff = _α .* _par_diff;
+
+    # total PAR and APAR in μmol photons m⁻² s⁻¹
+    _∑par_dir   = numerical∫(_par_dir  , ΔΛ_PAR);
+    _∑par_diff  = numerical∫(_par_diff , ΔΛ_PAR);
+    _∑apar_dir  = numerical∫(_apar_dir , ΔΛ_PAR);
+    _∑apar_diff = numerical∫(_apar_diff, ΔΛ_PAR);
+
+    return 1000 * (_∑par_dir + _∑par_diff), 1000 * (_∑apar_dir + _∑apar_diff)
+end
 
 
 end
