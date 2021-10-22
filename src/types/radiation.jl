@@ -5,10 +5,73 @@
 #     2020-May-30: put the 2017 mat file in an artifact
 #     2020-Aug-30: add the updated 2021 mat file along with that of 2017 into a new artifact
 #
-#######################################################################################################################################################################################################const FILE_SUN  = artifact"land_model_spectrum_V1" * "/sun.mat";
+#######################################################################################################################################################################################################
+const FILE_SUN  = artifact"land_model_spectrum_V1" * "/sun.mat";
 const OPTI_2017 = artifact"land_model_spectrum_V1" * "/Optipar2017_ProspectD.mat";
 const OPTI_2021 = artifact"land_model_spectrum_V1" * "/Optipar2021_ProspectPRO_CX.mat";
 WAVELENGTHS = [collect(400:10:650.1); collect(655:5:770.1); collect(780:25:2400.1)];
+
+
+#######################################################################################################################################################################################################
+#
+# Changes to this structure
+# General
+#     2021-Oct-22: refactor the structure with renamed fields
+#     2021-Oct-22: add a constructor to define the structure from wavelength sets and prescribed wave shape
+#
+#######################################################################################################################################################################################################
+"""
+$(TYPEDEF)
+
+Structure that stores hyperspectral radiation information
+
+# Fields
+$(TYPEDFIELDS)
+
+---
+# Examples
+```julia
+rad = HyperspectralRadiation{Float64}();
+rad = HyperspectralRadiation{Float64}(WaveLengthSet{Float64}());
+rad = HyperspectralRadiation{Float64}(WaveLengthSet{Float64}(), "");
+```
+"""
+mutable struct HyperspectralRadiation{FT<:AbstractFloat}
+    # prognostic variables that change with time
+    "Direct radiation `[mW m⁻² nm⁻¹]`"
+    e_direct::Vector{FT}
+    "Diffuse radiation `[mW m⁻² nm⁻¹]`"
+    e_diffuse::Vector{FT}
+
+    # constructors
+    HyperspectralRadiation{FT}(wls::WaveLengthSet{FT} = WaveLengthSet{FT}(), wlfn::String = FILE_SUN) where {FT<:AbstractFloat} = (
+        @unpack SΛ, NΛ = wls;
+
+        # create arrays
+        _e_direct  = zeros(FT, NΛ);
+        _e_diffuse = zeros(FT, NΛ);
+
+        # Read data from SCOPE MAT file if file is given, if not use 0
+        if isfile(wlfn)
+            _suni    = matread(wlfn)["sun"];
+            _wl      = _suni["wl"      ];
+            __e_dir  = _suni["Edirect" ];
+            __e_diff = _suni["Ediffuse"];
+
+            # fill in the arrays
+            for _i in 1:NΛ
+                _wi = findall( (_wl.>=SΛ[_i]) .& (_wl.<SΛ[_i+1]) );
+                if length(_wi)==0
+                    @warn "Some wavelengths out of bounds $(string(SΛ[_i]))";
+                end;
+                _e_direct[_i]  = mean( __e_dir[_wi]);
+                _e_diffuse[_i] = mean(__e_diff[_wi]);
+            end;
+        end;
+
+        return new{FT}(_e_direct, _e_diffuse)
+    );
+end
 
 
 #######################################################################################################################################################################################################
@@ -25,6 +88,7 @@ $(TYPEDEF)
 
 Structure that stores wave length information.
 
+# Fields
 $(TYPEDFIELDS)
 
 ---

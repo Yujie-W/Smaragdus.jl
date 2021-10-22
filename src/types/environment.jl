@@ -24,6 +24,7 @@ Brooks Corey soil parameters
 # Fields
 $(TYPEDFIELDS)
 
+---
 # Examples
 ```julia
 bc = BrooksCorey{FT}("Test", FT(5), FT(2), FT(0.5), FT(0.1));
@@ -59,6 +60,7 @@ van Genuchten soil parameters
 # Fields
 $(TYPEDFIELDS)
 
+---
 # Examples
 ```julia
 vg = VanGenuchten{FT}("Loam");
@@ -141,6 +143,7 @@ Struct that contains environmental conditions, such as soil moisture and atmosph
 # Fields
 $(TYPEDFIELDS)
 
+---
 # Examples
 ```julia
 ;
