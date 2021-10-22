@@ -1,5 +1,6 @@
 module Folium
 
+using DocStringExtensions: METHODLIST
 using LinearAlgebra: mul!
 using PkgUtility: numerical∫
 using SpecialFunctions: expint
@@ -22,6 +23,11 @@ export leaf_spectra!
 #     2021-Oct-22: add another method to prescribe leaf spectra such as transmittance and reflectance from broadband method
 #
 #######################################################################################################################################################################################################
+"""
+This function updates leaf level reflectance, transmittance, and fluorescence spectra related parameters. Supported methods are
+
+$(METHODLIST)
+"""
 function leaf_spectra! end
 
 

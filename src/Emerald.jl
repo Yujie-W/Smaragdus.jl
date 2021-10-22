@@ -38,10 +38,13 @@ include("types/radiation.jl"  )
 include("types/leaf.jl"       )
 
 # include sub-modules in a dependency manner
-include("Radiatio.jl")
-include("Aeris.jl"   )
-include("Folium.jl"  )
-include("Soli.jl"    )
+include("Radiatio.jl"   )
+include("Aeris.jl"      )
+include("Soli.jl"       )
+include("Hydraulicus.jl")
+include("Folium.jl"     )
+include("Canopeum.jl"   )
+include("Continuum.jl"  )
 
 
 end # module
