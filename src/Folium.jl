@@ -17,9 +17,7 @@ export leaf_spectra!
 # Changes made to this function
 # General
 #     2021-Oct-01: rename the function to leaf_spectra! as the function updates not only fluorescence but also reflectance, transmittance, and absorption spectra
-# Bug fix
-# To do
-#     TODO: add another method to prescribe leaf spectra such as transmittance and reflectance from broadband method
+#     2021-Oct-22: add another method to prescribe leaf spectra such as transmittance and reflectance from broadband method
 #
 #######################################################################################################################################################################################################
 function leaf_spectra! end
@@ -40,6 +38,24 @@ function leaf_spectra! end
 #     TODO: add References for this methods
 #
 #######################################################################################################################################################################################################
+"""
+    leaf_spectra!(leaf::Leaf{FT}, wls::WaveLengthSet{FT}; APAR_car::Bool = true, α::FT=FT(40)) where {FT<:AbstractFloat}
+
+Update leaf reflectance and transmittance spectra, and fluorescence spectrum matrices, given
+- `leaf` [`Leaf`](@ref) type struct that contains leaf biophysical parameters
+- `wls` [`WaveLengthSet`](@ref) type struct that contain wave length bins
+- `APAR_car` If true (default), account carotenoid absorption as APAR; otherwise, APAR is only by chlorophyll
+- `α` Optimum angle of incidence (default is 40° as in PROSPECT-D, SCOPE uses 59°)
+
+# Examples
+```julia
+leaf = Leaf{Float64}();
+wls = WaveLengthSet{Float64}();
+leaf_spectra!(leaf, wls);
+leaf_spectra!(leaf, wls; APAR_car=false);
+leaf_spectra!(leaf, wls; APAR_car=false, α=59.0);
+```
+"""
 leaf_spectra!(leaf::Leaf{FT}, wls::WaveLengthSet{FT}; APAR_car::Bool = true, α::FT=FT(40)) where {FT<:AbstractFloat} = (
     BIO = leaf.BIO_PHYSICS;
     @unpack K_ANT, K_BROWN, K_CAB, K_CAR_V, K_CAR_Z, K_CBC, K_H₂O, K_LMA, K_PRO, K_PS, MESOPHYLL_N, NDUB, NR = BIO;
@@ -50,7 +66,7 @@ leaf_spectra!(leaf::Leaf{FT}, wls::WaveLengthSet{FT}; APAR_car::Bool = true, α:
                      K_CAR_V .* BIO.car .* (1 - BIO.f_zeax) .+  # violaxanthin carotenoid absorption
                      K_CAR_Z .* BIO.car .* BIO.f_zeax .+        # zeaxanthin carotenoid absorption
                      K_ANT   .* BIO.ant .+                      # anthocynanin absorption absorption
-                     K_BROWN .* BIO.brown .+                    # TODO: cannot be a fraction, needs to be a concentration
+                     K_BROWN .* BIO.brown .+                    # TODO: needs to be a concentration
                      K_H₂O   .* BIO.l_H₂O .+                    # water absorption
                      K_CBC   .* BIO.CBC .+                      # carbon-based constituents absorption
                      K_PRO   .* BIO.PRO .+                      # protein absorption
@@ -170,11 +186,50 @@ leaf_spectra!(leaf::Leaf{FT}, wls::WaveLengthSet{FT}; APAR_car::Bool = true, α:
     _x_f = _τ₂₁[IΛ_SIF] ./ (1 .- _ρ₂₁[IΛ_SIF] .* _ρ_b[IΛ_SIF]) * _1_h;
     _y_e = _1_v * (_τ[IΛ_SIFE] .* _ρ₂₁[IΛ_SIFE] ./ (1 .- _ρ[IΛ_SIFE] .* _ρ₂₁[IΛ_SIFE]))';
     _y_f = _τ[IΛ_SIF] .* _ρ₂₁[IΛ_SIF] ./ (1 .- _ρ[IΛ_SIF] .* _ρ₂₁[IΛ_SIF]) * _1_h;
-    _a   = _x_e .* (1 .+ _y_e.*_y_f) .* _x_f;
+    _a   = _x_e .* (1 .+ _y_e .* _y_f) .* _x_f;
     _b   = _x_e .* (_y_e .+ _y_f) .* _x_f;
 
     BIO.mat_b = _a .* _mat_b + _b .* _mat_f;
     BIO.mat_f = _a .* _mat_f + _b .* _mat_b;
+
+    return nothing
+);
+
+
+#######################################################################################################################################################################################################
+#
+# Changes made to this method
+# General
+#     2021-Oct-22: add another method to prescribe leaf spectra such as transmittance and reflectance from broadband method
+#
+#######################################################################################################################################################################################################
+"""
+    leaf_spectra!(leaf::Leaf{FT}, wls::WaveLengthSet{FT}, ρₚₐᵣ::FT, ρₙᵢᵣ::FT, τₚₐᵣ::FT, τₙᵢᵣ::FT) where {FT<:AbstractFloat}
+
+Update leaf reflectance and transmittance (e.g., prescribe broadband PAR and NIR values), given
+- `leaf` [`Leaf`](@ref) type struct that contains leaf biophysical parameters
+- `wls` [`WaveLengthSet`](@ref) type struct that contain wave length bins
+- `ρₚₐᵣ` Reflectance at PAR region
+- `ρₙᵢᵣ` Reflectance at NIR region
+- `τₚₐᵣ` Transmittance at PAR region
+- `τₙᵢᵣ` Transmittance at NIR region
+
+# Examples
+```julia
+leaf = Leaf{Float64}();
+wls = WaveLengthSet{Float64}();
+leaf_spectra!(leaf, wls, 0.1, 0.45, 0.05, 0.25);
+```
+"""
+leaf_spectra!(leaf::Leaf{FT}, wls::WaveLengthSet{FT}, ρₚₐᵣ::FT, ρₙᵢᵣ::FT, τₚₐᵣ::FT, τₙᵢᵣ::FT) where {FT<:AbstractFloat} = (
+    BIO = leaf.BIO_PHYSICS;
+    @unpack IΛ_NIR, IΛ_PAR = wls;
+
+    BIO.ρ_SW[IΛ_PAR] .= ρₚₐᵣ;
+    BIO.ρ_SW[IΛ_NIR] .= ρₙᵢᵣ;
+    BIO.τ_SW[IΛ_PAR] .= τₚₐᵣ;
+    BIO.τ_SW[IΛ_NIR] .= τₙᵢᵣ;
+    BIO._α_SW = 1 .- BIO.τ_SW .- BIO.ρ_SW;
 
     return nothing
 );
