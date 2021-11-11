@@ -8,11 +8,11 @@
 # 5. Temporary variables are defined to start with _, such as _leaf
 # 6. Maximum length of each line is 200 letters (including space)
 # 7. There should be 2 lines of  empty lines between different components, such as two functions and methods
-# 8. Bug fixes or new changes should be documented in the comments above the struct, function, or method, such as this Style Guide above Emerald.jl
+# 8. Bug fixes or new changes should be documented in the comments above the struct, function, or method, such as this Style Guide above Smaragdus.jl
 # 9. Function parameter list that spans multiple lines need to be spaced with 12 spaces (3 tabs)
 #
 #######################################################################################################################################################################################################
-module Emerald
+module Smaragdus
 
 using LazyArtifacts
 
@@ -42,6 +42,7 @@ include("Radiatio.jl"   )
 include("Aeris.jl"      )
 include("Soli.jl"       )
 include("Hydraulicus.jl")
+include("Flumen.jl"     )
 include("Folium.jl"     )
 include("Canopeum.jl"   )
 include("Continuum.jl"  )

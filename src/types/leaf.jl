@@ -22,11 +22,11 @@ $(TYPEDFIELDS)
 ---
 # Examples
 ```julia
-lbio = Emerald.LeafBiophysics{FT}();
-lbio = Emerald.LeafBiophysics{FT}(collect(FT,400:5:2500.1));
-lbio = Emerald.LeafBiophysics{FT}(collect(FT,400:5:2500.1); opti=Emerald.OPTI_2021);
-lbio = Emerald.LeafBiophysics{FT}(WaveLengthSet{FT}());
-lbio = Emerald.LeafBiophysics{FT}(WaveLengthSet{FT}(); opti=Emerald.OPTI_2021);
+lbio = Smaragdus.LeafBiophysics{FT}();
+lbio = Smaragdus.LeafBiophysics{FT}(collect(FT,400:5:2500.1));
+lbio = Smaragdus.LeafBiophysics{FT}(collect(FT,400:5:2500.1); opti=Smaragdus.OPTI_2021);
+lbio = Smaragdus.LeafBiophysics{FT}(WaveLengthSet{FT}());
+lbio = Smaragdus.LeafBiophysics{FT}(WaveLengthSet{FT}(); opti=Smaragdus.OPTI_2021);
 ```
 """
 mutable struct LeafBiophysics{FT<:AbstractFloat}
@@ -195,9 +195,9 @@ $(TYPEDFIELDS)
 ```julia
 leaf = Leaf{FT}();
 leaf = Leaf{FT}(collect(FT,400:5:2500.1));
-leaf = Leaf{FT}(collect(FT,400:5:2500.1); opti=Emerald.OPTI_2021);
+leaf = Leaf{FT}(collect(FT,400:5:2500.1); opti=Smaragdus.OPTI_2021);
 leaf = Leaf{FT}(WaveLengthSet{FT}());
-leaf = Leaf{FT}(WaveLengthSet{FT}(); opti=Emerald.OPTI_2021);
+leaf = Leaf{FT}(WaveLengthSet{FT}(); opti=Smaragdus.OPTI_2021);
 ```
 """
 mutable struct Leaf{FT<:AbstractFloat}

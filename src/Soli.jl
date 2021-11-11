@@ -2,10 +2,10 @@ module Soli
 
 using ConstrainedRootSolvers: ReduceStepMethodND, SolutionToleranceND, find_peak
 using DocStringExtensions: METHODLIST
-using ..Emerald: VanGenuchten
+using ..Smaragdus: VanGenuchten
 using UnPack: @unpack
 
-import ..Emerald: BrooksCorey
+import ..Smaragdus: BrooksCorey
 
 
 # export public functions

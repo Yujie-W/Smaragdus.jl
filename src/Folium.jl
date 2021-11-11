@@ -7,7 +7,7 @@ using SpecialFunctions: expint
 using UnPack: @unpack
 
 # using external types and functions
-using ..Emerald: HyperspectralRadiation, Leaf, WaveLengthSet
+using ..Smaragdus: HyperspectralRadiation, Leaf, WaveLengthSet
 using ..Radiatio: average_transmittance, energy, photon
 
 

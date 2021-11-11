@@ -1,6 +1,6 @@
 using Documenter
 using Literate
-using Emerald
+using Smaragdus
 
 
 # define default docs pages
@@ -54,17 +54,17 @@ format = Documenter.HTML(
 
 # build the docs
 makedocs(
-    sitename = "Emerald",
+    sitename = "Smaragdus",
     format = format,
     clean = false,
-    modules = [Emerald],
+    modules = [Smaragdus],
     pages = pages,
 );
 
 
 # deploy the docs to Github gh-pages
 deploydocs(
-    repo = "github.com/Yujie-W/Emerald.jl.git",
+    repo = "github.com/Yujie-W/Smaragdus.jl.git",
     target = "build",
     devbranch = "main",
     push_preview = true,

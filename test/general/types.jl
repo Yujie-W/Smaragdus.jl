@@ -3,28 +3,28 @@
         # wavelength dataset
         _wls = WaveLengthSet{FT}();
         _wls = WaveLengthSet{FT}(collect(FT,400:5:2500));
-        _wls = WaveLengthSet{FT}(collect(FT,400:5:2500); opti=Emerald.OPTI_2017);
+        _wls = WaveLengthSet{FT}(collect(FT,400:5:2500); opti=Smaragdus.OPTI_2017);
         @test true;
 
         # create leaf biophysics
-        _lbio = Emerald.LeafBiophysics{FT}();
-        _lbio = Emerald.LeafBiophysics{FT}(collect(FT,400:5:2400.1));
-        _lbio = Emerald.LeafBiophysics{FT}(collect(FT,400:5:2400.1); opti=Emerald.OPTI_2021);
-        _lbio = Emerald.LeafBiophysics{FT}(WaveLengthSet{FT}());
-        _lbio = Emerald.LeafBiophysics{FT}(WaveLengthSet{FT}(); opti=Emerald.OPTI_2021);
+        _lbio = Smaragdus.LeafBiophysics{FT}();
+        _lbio = Smaragdus.LeafBiophysics{FT}(collect(FT,400:5:2400.1));
+        _lbio = Smaragdus.LeafBiophysics{FT}(collect(FT,400:5:2400.1); opti=Smaragdus.OPTI_2021);
+        _lbio = Smaragdus.LeafBiophysics{FT}(WaveLengthSet{FT}());
+        _lbio = Smaragdus.LeafBiophysics{FT}(WaveLengthSet{FT}(); opti=Smaragdus.OPTI_2021);
         @test true;
 
         # create leaf biophysics : warning expected here
         @info "A warning is expected here...";
-        _lbio = Emerald.LeafBiophysics{FT}(collect(FT,400:5:2410.1));
+        _lbio = Smaragdus.LeafBiophysics{FT}(collect(FT,400:5:2410.1));
         @test true;
 
         # create leaf
         _leaf = Leaf{FT}();
         _leaf = Leaf{FT}(collect(FT,400:5:2400.1));
-        _leaf = Leaf{FT}(collect(FT,400:5:2400.1); opti=Emerald.OPTI_2021);
+        _leaf = Leaf{FT}(collect(FT,400:5:2400.1); opti=Smaragdus.OPTI_2021);
         _leaf = Leaf{FT}(WaveLengthSet{FT}());
-        _leaf = Leaf{FT}(WaveLengthSet{FT}(); opti=Emerald.OPTI_2021);
+        _leaf = Leaf{FT}(WaveLengthSet{FT}(); opti=Smaragdus.OPTI_2021);
         @test true;
 
         # create van Genuchten soil

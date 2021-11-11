@@ -1,0 +1,3 @@
+module Continuum
+
+end # module

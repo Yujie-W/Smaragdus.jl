@@ -1,3 +1,3 @@
-# Emerald.jl
+# Smaragdus.jl
 
 Refactored CliMA Land model.

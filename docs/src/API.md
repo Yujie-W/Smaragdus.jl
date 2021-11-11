@@ -1,6 +1,6 @@
-# Emerald
+# Smaragdus
 ```@meta
-CurrentModule = Emerald
+CurrentModule = Smaragdus
 ```
 
 
@@ -32,7 +32,7 @@ WaveLengthSet
 ## Soli
 ```@docs
 Soli.soil_ψ_25
-Soli.soil_ψ_25(vc::Emerald.BrooksCorey{FT}, θ::FT) where {FT<:AbstractFloat}
+Soli.soil_ψ_25(vc::Smaragdus.BrooksCorey{FT}, θ::FT) where {FT<:AbstractFloat}
 ```
 
 

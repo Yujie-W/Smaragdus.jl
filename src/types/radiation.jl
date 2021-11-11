@@ -34,7 +34,7 @@ $(TYPEDFIELDS)
 ```julia
 wls = WaveLengthSet{FT}();
 wls = WaveLengthSet{FT}(collect(FT,400:5:2500));
-wls = WaveLengthSet{FT}(collect(FT,400:5:2500); opti=Emerald.OPTI_2017);
+wls = WaveLengthSet{FT}(collect(FT,400:5:2500); opti=Smaragdus.OPTI_2017);
 ```
 """
 mutable struct WaveLengthSet{FT<:AbstractFloat}

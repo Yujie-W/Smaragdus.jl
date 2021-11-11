@@ -133,7 +133,7 @@ version = "0.27.10"
 deps = ["ArgTools", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 
-[[Emerald]]
+[[Smaragdus]]
 deps = ["ConstrainedRootSolvers", "DocStringExtensions", "LazyArtifacts", "LinearAlgebra", "MAT", "PkgUtility", "SpecialFunctions", "Statistics", "Test", "UnPack", "WaterPhysics"]
 path = ".."
 uuid = "b4c4a1c9-ad73-451c-9fca-9e2aae930537"

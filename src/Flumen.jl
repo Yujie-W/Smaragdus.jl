@@ -1,0 +1,3 @@
+module Flumen
+
+end # module
