@@ -189,6 +189,8 @@ mutable struct SoilAir{FT<:AbstractFloat}
     # dignostic variables that change with time
     "Saturated vapor pressure at different air layers `[Pa]`"
     p_H₂O_sat::Vector{FT}
+    "Relative humidity at different air layers `[-]`"
+    rh::Vector{FT}
     "Vapor pressure deficit at different air layers `[Pa]`"
     vpd::Vector{FT}
     "Soil water potential at different soil layers `[MPa]`"
@@ -204,6 +206,6 @@ mutable struct SoilAir{FT<:AbstractFloat}
         _vcs    = [VanGenuchten{FT}("Silt") for _i in 1:_n_soil];
 
         return new{FT}(area, 1, _n_air, _n_soil, _vcs, z_air, z_soil, diff(z_air), diff(z_soil), 41 * ones(_n_air),  0.5 * _p_sats, T_25() * ones(_n_air), T_25() * ones(_n_soil), 2 * ones(_n_air),
-                       1 * ones(_n_air), [_vc.Θ_SAT for _vc in _vcs], _p_sats, 0.5 * _p_sats, zeros(_n_soil))
+                       1 * ones(_n_air), [_vc.Θ_SAT for _vc in _vcs], _p_sats, 0.5 * ones(_n_air), 0.5 * _p_sats, zeros(_n_soil))
     );
 end

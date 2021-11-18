@@ -2,8 +2,9 @@ module Soli
 
 using ConstrainedRootSolvers: ReduceStepMethodND, SolutionToleranceND, find_peak
 using DocStringExtensions: METHODLIST
-using ..Smaragdus: VanGenuchten
 using UnPack: @unpack
+
+using ..Smaragdus: VanGenuchten
 
 import ..Smaragdus: BrooksCorey
 
