@@ -8,25 +8,21 @@ CurrentModule = Smaragdus
 
 ### Environment
 ```@docs
-AbstractSoilVC
-BrooksCorey
-VanGenuchten
 SoilAir
 ```
 
 ### Leaf
 ```@docs
 Leaf
-LeafBiophysics
-```
-
-### Radiation
-```@docs
-WaveLengthSet
+LeafPhotosynthesis
 ```
 
 
 ## Folium
+```@docs
+Soli.soil_ψ_25
+Soli.soil_ψ_25(vc::Smaragdus.BrooksCorey{FT}, θ::FT) where {FT<:AbstractFloat}
+```
 
 
 ## Soli

@@ -1,4 +1,5 @@
 [deps]
+ClimaCache = "781d2db2-48ae-11ec-81d3-0242ac130003"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-Smaragdus = "b4c4a1c9-ad73-451c-9fca-9e2aae930537"
 Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
+Smaragdus = "b4c4a1c9-ad73-451c-9fca-9e2aae930537"
