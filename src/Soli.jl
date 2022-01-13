@@ -1,12 +1,11 @@
 module Soli
 
+using ClimaCache: VanGenuchten
 using ConstrainedRootSolvers: ReduceStepMethodND, SolutionToleranceND, find_peak
 using DocStringExtensions: METHODLIST
 using UnPack: @unpack
 
-using ..Smaragdus: VanGenuchten
-
-import ..Smaragdus: BrooksCorey
+import ClimaCache: BrooksCorey
 
 
 # export public functions

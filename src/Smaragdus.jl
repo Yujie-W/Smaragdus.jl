@@ -14,28 +14,12 @@
 #######################################################################################################################################################################################################
 module Smaragdus
 
-using LazyArtifacts
-
-using ClimaCache: BrooksCorey, HyperspectralAbsorption, HyperspectralRadiation, LeafBiophysics, VanGenuchten, WaveLengthSet
-using DocStringExtensions: TYPEDEF, TYPEDFIELDS
-using MAT: matread
-using PkgUtility: T_25
 using Statistics: mean
-using UnPack: @unpack
-using WaterPhysics: saturation_vapor_pressure
-
-
-# export public types
-export Leaf, SoilAir
 
 
 # include utility files
 include("utils/radiation.jl" )
 include("utils/statistics.jl")
-
-# include type files
-include("types/environment.jl")
-include("types/leaf.jl"       )
 
 # include sub-modules in a dependency manner
 include("Radiatio.jl"   )
